@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithMessages.Sender", "src\WorkingWithMessages.Sender\WorkingWithMessages.Sender.csproj", "{DA8B510B-6C2A-4EEF-9F4A-81AA340FF7C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithMessages.Receiver", "src\WorkingWithMessages.Receiver\WorkingWithMessages.Receiver.csproj", "{AEAA6D9F-4C71-450D-9165-CF41E13D0334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithMessages.Forwarder", "src\WorkingWithMessages.Forwarder\WorkingWithMessages.Forwarder.csproj", "{17373348-D2FD-414F-9C6E-B04D798D5557}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithMessages.Config", "src\WorkingWithMessages.Config\WorkingWithMessages.Config.csproj", "{F264C0C2-63BE-4653-AF7A-973991FC2443}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithMessages.DataContracts", "src\WorkingWithMessages.DataContracts\WorkingWithMessages.DataContracts.csproj", "{BB900D8F-5A2F-4811-B4BC-44A8D23FB672}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA8B510B-6C2A-4EEF-9F4A-81AA340FF7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8B510B-6C2A-4EEF-9F4A-81AA340FF7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8B510B-6C2A-4EEF-9F4A-81AA340FF7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8B510B-6C2A-4EEF-9F4A-81AA340FF7C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEAA6D9F-4C71-450D-9165-CF41E13D0334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEAA6D9F-4C71-450D-9165-CF41E13D0334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEAA6D9F-4C71-450D-9165-CF41E13D0334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEAA6D9F-4C71-450D-9165-CF41E13D0334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17373348-D2FD-414F-9C6E-B04D798D5557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17373348-D2FD-414F-9C6E-B04D798D5557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17373348-D2FD-414F-9C6E-B04D798D5557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17373348-D2FD-414F-9C6E-B04D798D5557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F264C0C2-63BE-4653-AF7A-973991FC2443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F264C0C2-63BE-4653-AF7A-973991FC2443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F264C0C2-63BE-4653-AF7A-973991FC2443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F264C0C2-63BE-4653-AF7A-973991FC2443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB900D8F-5A2F-4811-B4BC-44A8D23FB672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB900D8F-5A2F-4811-B4BC-44A8D23FB672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB900D8F-5A2F-4811-B4BC-44A8D23FB672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB900D8F-5A2F-4811-B4BC-44A8D23FB672}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10525944-87E5-4D25-B48A-33282A88B470}
+	EndGlobalSection
+EndGlobal
