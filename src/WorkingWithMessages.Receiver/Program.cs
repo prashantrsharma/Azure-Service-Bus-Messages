@@ -13,6 +13,7 @@ namespace WorkingWithMessages.Receiver
         static readonly QueueClient Client = QueueClient.CreateFromConnectionString(Settings.ConnectionString,Settings.QueueName);
         static void Main(string[] args)
         {
+            Console.Title = "Receiver";
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Receiver Console - Hit Enter");
             Console.ReadLine();
