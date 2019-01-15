@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
 using WorkingWithMessages.Config;
 using WorkingWithMessages.DataContracts;
 
@@ -31,7 +32,10 @@ namespace WorkingWithMessages.Sender
             //SendControlMessage();
 
             //Send Pizza Order
-            SendPizzaOrder();
+            //SendPizzaOrder();
+
+            //SendJsonMessage
+            SendJsonMessage();
 
             //Stop the Stopwatch
             watch.Stop();
@@ -90,12 +94,12 @@ namespace WorkingWithMessages.Sender
             };
 
             //Add some properties to the property collection
-            message.Properties.Add("SystemId",1462);
-            message.Properties.Add("Command","Pending Restart");
-            message.Properties.Add("ActionTime",DateTime.UtcNow.AddHours(2));
+            message.Properties.Add("SystemId", 1462);
+            message.Properties.Add("Command", "Pending Restart");
+            message.Properties.Add("ActionTime", DateTime.UtcNow.AddHours(2));
 
             //Send the message
-            QueueClient client = QueueClient.CreateFromConnectionString(Settings.ConnectionString,Settings.QueueName);
+            QueueClient client = QueueClient.CreateFromConnectionString(Settings.ConnectionString, Settings.QueueName);
             Console.WriteLine("Sending control message....");
             client.Send(message);
             Console.WriteLine("Done!");
@@ -143,6 +147,41 @@ namespace WorkingWithMessages.Sender
 
             //What is the message now?
             Console.WriteLine($"Message size : {message.Size}");
+        }
+
+        static void SendJsonMessage()
+        {
+            //Create a Pizza Order
+            PizzaOrder order = new PizzaOrder
+            {
+                Type = "Kebab",
+                Size = "Large",
+                CustomerName = "Alan"
+            };
+
+            //Serialize the message to JSON
+            string json = JsonConvert.SerializeObject(order);
+
+            Console.WriteLine($"Json content:{json}");
+
+            //Create a new brokered message using JSON object as the body
+            BrokeredMessage message = new BrokeredMessage(json)
+            {
+                //Set the content type and label to the object type
+                ContentType = "application/json",
+                Label = order.GetType().ToString()
+            };
+
+            Console.WriteLine(message.Label);
+
+            Console.WriteLine("Sending message.....");
+            QueueClient client = QueueClient.CreateFromConnectionString(Settings.ConnectionString, Settings.QueueName);
+            client.Send(message);
+            client.Close();
+
+            Console.WriteLine("Done!");
+            Console.WriteLine("Order sent.");
+           
         }
     }
 }
