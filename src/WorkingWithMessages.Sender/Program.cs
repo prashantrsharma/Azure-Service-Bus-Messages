@@ -35,7 +35,10 @@ namespace WorkingWithMessages.Sender
             //SendPizzaOrder();
 
             //SendJsonMessage
-            SendJsonMessage();
+            //SendJsonMessage();
+
+            //Send Pizza Order
+            SendPizzaOrderBatch();
 
             //Stop the Stopwatch
             watch.Stop();
@@ -45,6 +48,37 @@ namespace WorkingWithMessages.Sender
             Console.WriteLine($".........It took {watch.Elapsed.TotalMinutes} minutes to process the current transaction.........");
             Console.ReadKey();
 
+        }
+
+        static void SendPizzaOrderBatch()
+        {
+            //Create some data
+            string[] names = { "Alan", "Jennifer", "James" };
+            string[] pizzas = { "Hawaiian", "Vegitarian", "Capricciosa", "Napolitana" };
+
+            //Create a queue client
+            QueueClient client = QueueClient.CreateFromConnectionString(Settings.ConnectionString,Settings.QueueName);
+            
+            //Send a batch of pizza orders
+            List<Task> taskList = new List<Task>();
+
+            foreach (var pizza in pizzas)
+            {
+                foreach (var name in names)
+                {
+                    PizzaOrder order = new PizzaOrder
+                    {
+                        CustomerName = name,
+                        Size = "Large",
+                        Type = pizza
+                    };
+                    BrokeredMessage message = new BrokeredMessage(order);
+                    taskList.Add(client.SendAsync(message));
+                }
+            }
+            Console.WriteLine("Sending batch.....");
+            Task.WaitAll(taskList.ToArray());
+            Console.WriteLine("Sent!");
         }
 
         static void SendTextString(string text, bool sendSync)
@@ -181,7 +215,7 @@ namespace WorkingWithMessages.Sender
 
             Console.WriteLine("Done!");
             Console.WriteLine("Order sent.");
-           
+
         }
     }
 }

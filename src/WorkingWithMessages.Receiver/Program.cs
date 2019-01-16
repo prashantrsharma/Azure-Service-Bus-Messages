@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
@@ -23,12 +24,67 @@ namespace WorkingWithMessages.Receiver
 
             //Receive and Process the message
             //ReceiveAndProcess();
-
-            ProcessOrderMessages();
+            //ProcessOrderMessages();
+            SimplePizzaReceiveLoop();
+            
 
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Receiver Console - Complete");
             Console.ReadLine();
+        }
+
+         static void SimplePizzaReceiveLoop()
+        {
+           //Create a queue client
+           QueueClient client = QueueClient.CreateFromConnectionString(Settings.ConnectionString,Settings.QueueName);
+
+            while (true)
+            {
+                Console.WriteLine("Receiving........");
+
+                //Receive a message
+                BrokeredMessage message = client.Receive(TimeSpan.FromSeconds(5));
+
+                if (message != null)
+                {
+                    try
+                    {
+                        //Extract the message
+                        PizzaOrder order = message.GetBody<PizzaOrder>();
+
+                        //Process the message
+                        CookPizza(order);
+
+                        //Mark the message as complete
+                        message.Complete();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Exception:{e.Message}");
+
+                        //Abandon the message
+                        message.Abandon();
+
+                        //DeadLetter the message
+                        //message.DeadLetter();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No message present on the queue...");
+                }
+
+                //Always close the client
+               // client.Close();
+            }
+            
+        }
+
+        private static void CookPizza(PizzaOrder order)
+        {
+            Console.WriteLine($"Cooking {order.Type} for {order.CustomerName}");
+            Thread.Sleep(5000);
+            Console.WriteLine($"        {order.Type} pizza for {order.CustomerName}");
         }
 
         static void ReceiveAndProcess()
