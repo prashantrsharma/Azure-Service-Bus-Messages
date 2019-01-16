@@ -25,15 +25,47 @@ namespace WorkingWithMessages.Receiver
             //Receive and Process the message
             //ReceiveAndProcess();
             //ProcessOrderMessages();
-            SimplePizzaReceiveLoop();
-            
+            //SimplePizzaReceiveLoop();
+            ReceiveAndProcessPizzaOrdersUsingOnMessage(12);
+            //System.Environment.ProcessorCount
 
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Receiver Console - Complete");
             Console.ReadLine();
         }
 
-         static void SimplePizzaReceiveLoop()
+        private static void ReceiveAndProcessPizzaOrdersUsingOnMessage(int threads)
+        {
+            //Create a queue client
+            QueueClient client = QueueClient.CreateFromConnectionString(Settings.ConnectionString,Settings.QueueName);
+
+            //Set the Options for using On Message()
+            OnMessageOptions options = new OnMessageOptions
+            {
+                AutoComplete =  false,
+                AutoRenewTimeout = TimeSpan.FromSeconds(30),
+                MaxConcurrentCalls = threads
+            };
+            
+            //Create a message pump
+            client.OnMessage(message =>
+            {
+                //Deserialize the message body
+                PizzaOrder order = message.GetBody<PizzaOrder>();
+
+                //Process the message
+                CookPizza(order);
+
+                //Complete the process
+                message.Complete();
+            },options);
+
+            Console.WriteLine("Receiving,hit enter to exit.");
+            Console.ReadLine();
+            client.Close();
+        }
+
+        static void SimplePizzaReceiveLoop()
         {
            //Create a queue client
            QueueClient client = QueueClient.CreateFromConnectionString(Settings.ConnectionString,Settings.QueueName);
