@@ -71,11 +71,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RfidCheckout.Config\RfidCheckout.Config.csproj">
-      <Project>{4299e3f7-3b22-497e-8b54-0e2694a0b1f7}</Project>
+      <Project>{76196f18-ffe6-4d94-b240-877236a4fb70}</Project>
       <Name>RfidCheckout.Config</Name>
     </ProjectReference>
     <ProjectReference Include="..\RfidCheckout.DataContracts\RfidCheckout.DataContracts.csproj">
-      <Project>{44a87119-fdfe-46b6-a3a9-f5b3996502c8}</Project>
+      <Project>{c2418eee-0ff4-452c-b104-1e1c82457f5b}</Project>
       <Name>RfidCheckout.DataContracts</Name>
     </ProjectReference>
   </ItemGroup>
