@@ -14,7 +14,7 @@ namespace TopicsAndSubscriptions
 {
     class Program
     {
-        private static string _topicPath = "orderTopic";
+        private const string TopicPath = "orderTopic";
         static NamespaceManager _manager;
         static MessagingFactory _factory;
         static TopicClient _orderTopicClient;
@@ -34,7 +34,7 @@ namespace TopicsAndSubscriptions
             Console.ReadLine();
 
             //Create a Topic Client for ordertopic
-            _orderTopicClient = _factory.CreateTopicClient(_topicPath);
+            _orderTopicClient = _factory.CreateTopicClient(TopicPath);
 
             Console.WriteLine("Sending orders.....");
 
@@ -49,7 +49,7 @@ namespace TopicsAndSubscriptions
             Console.ReadLine();
 
             //Receive all messages from the OrderTopic Subscription 
-            ReceiveFromSubscription(_topicPath);
+            ReceiveFromSubscription(TopicPath);
 
             //Close the MessagingFactory and all it created
             _factory.Close();
@@ -108,16 +108,16 @@ namespace TopicsAndSubscriptions
         private static void ReceiveFromSubscription(string topicPath)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine($"Receiving from topic : {_topicPath} subscriptions");
+            Console.WriteLine($"Receiving from topic : {TopicPath} subscriptions");
 
             //Loop through the subscriptions in an topic
-            foreach (SubscriptionDescription subscriptionDescription in _manager.GetSubscriptions(_topicPath))
+            foreach (SubscriptionDescription subscriptionDescription in _manager.GetSubscriptions(TopicPath))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"\t Receiving from subscription \t {subscriptionDescription.Name}.....");
 
                 //Create and SubscriptionClient
-                SubscriptionClient client = _factory.CreateSubscriptionClient(_topicPath, subscriptionDescription.Name);
+                SubscriptionClient client = _factory.CreateSubscriptionClient(TopicPath, subscriptionDescription.Name);
 
                 //Receive all the messages from the subscription
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -173,29 +173,29 @@ namespace TopicsAndSubscriptions
         private static void CreateTopicsAndSubscriptions()
         {
             //If Topic exists, delete it 
-            if (_manager.TopicExists(_topicPath))
+            if (_manager.TopicExists(TopicPath))
             {
-                _manager.DeleteTopic(_topicPath);
+                _manager.DeleteTopic(TopicPath);
             }
 
             //Create the Topic
-            _manager.CreateTopic(_topicPath);
+            _manager.CreateTopic(TopicPath);
 
             //Subscription for all orders
-            _manager.CreateSubscription(_topicPath, AllOrdersSubscription);
+            _manager.CreateSubscription(TopicPath, AllOrdersSubscription);
 
             //Subscriptions for USA and EU regions
-            _manager.CreateSubscription(_topicPath, "usaSubscription", new SqlFilter("Region = 'USA'"));
-            _manager.CreateSubscription(_topicPath, "euSubscription", new SqlFilter("Region = 'EU'"));
-            _manager.CreateSubscription(_topicPath, "euSubscription2", new SqlFilter("Region = 'eu'"));
+            _manager.CreateSubscription(TopicPath, "usaSubscription", new SqlFilter("Region = 'USA'"));
+            _manager.CreateSubscription(TopicPath, "euSubscription", new SqlFilter("Region = 'EU'"));
+            _manager.CreateSubscription(TopicPath, "euSubscription2", new SqlFilter("Region = 'eu'"));
 
             //Subscriptions for large orders, high value orders and loyal USA customers
-            _manager.CreateSubscription(_topicPath, "largeOrderSubscription", new SqlFilter("Items > 30"));
-            _manager.CreateSubscription(_topicPath, "highValueSubscription", new SqlFilter("Value > 500"));
-            _manager.CreateSubscription(_topicPath, "loyaltySubscription", new SqlFilter("HasLoyaltyCard = true AND Region = 'USA'"));
+            _manager.CreateSubscription(TopicPath, "largeOrderSubscription", new SqlFilter("Items > 30"));
+            _manager.CreateSubscription(TopicPath, "highValueSubscription", new SqlFilter("Value > 500"));
+            _manager.CreateSubscription(TopicPath, "loyaltySubscription", new SqlFilter("HasLoyaltyCard = true AND Region = 'USA'"));
 
             //Correlation Filter for UK Customers
-            _manager.CreateSubscription(_topicPath, "ukSubscription", new CorrelationFilter("UK"));
+            _manager.CreateSubscription(TopicPath, "ukSubscription", new CorrelationFilter("UK"));
         }
 
         private static void CreateManagerAndFactory()
